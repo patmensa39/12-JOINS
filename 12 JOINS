@@ -1,0 +1,162 @@
+/*12 JOINS
+Created by Patrick Mensah 
+Date Created: 04/08/2023
+Description:  How to combine to data tables into one using joins.
+*/
+
+--This combines all the columns in both the Invoice fields and the Customer fields 
+--This will bring the invoice data first before the Customer data and will use the primary keys "CustomerID"
+--Inner Joines are mostly the default join 
+SELECT 
+    *
+FROM 
+    Invoice
+INNER JOIN
+    Customer
+ON 
+    Invoice.CustomerId = Customer.CustomerId
+ORDER BY Customer.CustomerId
+
+
+--LEFT OUTER JOIN 
+SELECT 
+    *
+FROM 
+    Invoice
+LEFT OUTER JOIN
+    Customer
+ON 
+    Invoice.CustomerId = Customer.CustomerId
+ORDER BY Customer.CustomerId
+
+
+--RIGHT OUTER JOIN  
+SELECT 
+    *
+FROM 
+    Invoice
+RIGHT OUTER JOIN
+    Customer
+ON 
+    Invoice.CustomerId = Customer.CustomerId
+ORDER BY Customer.CustomerId
+
+
+--Simplifying Joins by introducing alias  
+SELECT 
+    c.LastName,
+    c.FirstName,
+    i.InvoiceId,
+    i.CustomerId,
+    i.InvoiceDate,
+    i.Total
+FROM 
+    Invoice AS i
+INNER JOIN
+    Customer AS c
+ON 
+    i.CustomerId = c.CustomerId
+ORDER BY c.CustomerId
+
+
+--LEFT OUTER JOIN 
+SELECT 
+    c.LastName,
+    c.FirstName,
+    i.InvoiceId,
+    i.CustomerId,
+    i.InvoiceDate,
+    i.Total
+FROM 
+    Invoice AS i
+LEFT OUTER JOIN
+    Customer AS c
+ON 
+    i.CustomerId = c.CustomerId
+ORDER BY c.CustomerId
+
+
+--RIGHT OUTER JOIN 
+SELECT 
+    c.LastName,
+    c.FirstName,
+    i.InvoiceId,
+    i.CustomerId,
+    i.InvoiceDate,
+    i.Total
+FROM 
+    Invoice AS i
+RIGHT OUTER JOIN
+    Customer AS c
+ON 
+    i.CustomerId = c.CustomerId
+ORDER BY c.CustomerId
+
+
+--Another one using Aliases 
+--INNER  JOINS, THE MOST COMMON TYPE OF JOIN USED 
+
+SELECT 
+    i.InvoiceId,
+    c.CustomerId,
+    c.LastName,
+    c.FirstName,
+    i.InvoiceDate,
+    i.BillingCity,
+    i.BillingAddress,
+    i.Total
+FROM
+    Invoice AS i
+INNER JOIN 
+    Customer AS c
+ON 
+    i.CustomerId = c.CustomerId
+    
+
+--LEFT OUTER JOIN
+SELECT 
+    i.InvoiceId,
+    c.CustomerId,
+    c.LastName,
+    c.FirstName,
+    i.InvoiceDate,
+    i.BillingCity,
+    i.BillingAddress,
+    i.Total
+FROM
+    Invoice AS i
+LEFT OUTER JOIN 
+    Customer AS c
+ON 
+    i.CustomerId = c.CustomerId
+
+--JOINING MANY TABLES 
+--Desscription: What employees are responsible for the 10 highest individual sales?
+--The supportID in Customer table is the same as the CustomerId in the customer table 
+
+SELECT 
+    e.FirstName,
+    e.LastName,
+    e.EmployeeId,
+    c.FirstName,
+    c.LastName,
+    c.SupportRepId,
+    i.CustomerID,
+    i.Total
+FROM
+    Invoice AS i
+INNER JOIN
+    Customer AS c 
+ON
+     i.CustomerId = c.CustomerId
+INNER JOIN
+    Employee AS e 
+ON 
+    c.SupportRepId = e.EmployeeId
+ORDER BY
+    i.Total DESC
+LIMIT 10
+
+
+
+
